@@ -16,7 +16,7 @@ const createPeekStore = () => {
     let external = !url.startsWith("/")
     if (!external) {
       const state = get(stateStore)
-      const serialised = encodeURIComponent(btoa(JSON.stringify(state)))
+      const serialised = btoa(encodeURIComponent(JSON.stringify(state)))
       const query = `peek=true&state=${serialised}`
       href = `${window.location.href.split("#")[0]}#${url}?${query}`
     }
