@@ -145,7 +145,7 @@
     {quiet}
     {compact}
     {customRenderers}
-    allowSelectRows={allowSelectRows && table}
+    {allowSelectRows}
     bind:selectedRows
     allowEditRows={false}
     allowEditColumns={false}
