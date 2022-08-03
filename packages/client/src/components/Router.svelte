@@ -51,7 +51,7 @@
     const queryParams = parseQueryString(get(querystring))
     if (queryParams.state) {
       try {
-        const state = JSON.parse(atob(queryParams.state))
+        const state = JSON.parse(decodeURIComponent(atob(queryParams.state)))
         stateStore.actions.initialise(state)
       } catch (error) {
         // Swallow error and do nothing
