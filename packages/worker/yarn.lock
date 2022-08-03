@@ -291,18 +291,19 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@budibase/backend-core@1.1.33-alpha.1":
-  version "1.1.33-alpha.1"
-  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-1.1.33-alpha.1.tgz#2c483f71c99f0dfd07e78dfc162be979e97a5a37"
-  integrity sha512-1oY1GPWQ4ym4m75QJxnCBOmEGc+yuXRGafKpBGXXqpyA7qMP5TSYpEGrrpX3uKrIsLIRsiaqw3oPr0T8aL2LQw==
+"@budibase/backend-core@1.1.33-alpha.4":
+  version "1.1.33-alpha.4"
+  resolved "https://registry.yarnpkg.com/@budibase/backend-core/-/backend-core-1.1.33-alpha.4.tgz#207ffe45d41535e59ccc21cca9892d1e41818a14"
+  integrity sha512-p8SZkODBF4+BhfIYWIkUtJhR04OjvkmkrVTSFWXv2NTkIbSpaJGTkx9Kao+1Dn4N3H4jU4OBdmScy+C8F5MeSw==
   dependencies:
-    "@budibase/types" "1.1.33-alpha.1"
+    "@budibase/types" "1.1.33-alpha.4"
     "@techpass/passport-openidconnect" "0.3.2"
     aws-sdk "2.1030.0"
     bcrypt "5.0.1"
     dotenv "16.0.1"
     emitter-listener "1.1.2"
     ioredis "4.28.0"
+    joi "17.6.0"
     jsonwebtoken "8.5.1"
     koa-passport "4.1.4"
     lodash "4.17.21"
@@ -324,21 +325,21 @@
     uuid "8.3.2"
     zlib "1.0.5"
 
-"@budibase/pro@1.1.33-alpha.1":
-  version "1.1.33-alpha.1"
-  resolved "https://registry.yarnpkg.com/@budibase/pro/-/pro-1.1.33-alpha.1.tgz#2778f4895b5dec982ef8245d0c36247c6242cd73"
-  integrity sha512-M0gust58aTyPtpp2CKhFqsmzVYu1ZttW1l6p9tePClhfp4FvkYTy/UsHLV7Pg3NbCLDo3qpCzTpPTYnePtf/vg==
+"@budibase/pro@1.1.33-alpha.4":
+  version "1.1.33-alpha.4"
+  resolved "https://registry.yarnpkg.com/@budibase/pro/-/pro-1.1.33-alpha.4.tgz#d25bc2ca73d11adfdc659e324b1e8de31c17657a"
+  integrity sha512-CQ3zVbom4ndzIfUznUSERQ4Bz6ZVuy4HbOYGKKkU/FjoWqrYRK1tqlhmfCNQy8P9rnKURCUf3PMoWVWSOAS24g==
   dependencies:
-    "@budibase/backend-core" "1.1.33-alpha.1"
-    "@budibase/types" "1.1.33-alpha.1"
+    "@budibase/backend-core" "1.1.33-alpha.4"
+    "@budibase/types" "1.1.33-alpha.4"
     "@koa/router" "8.0.8"
     joi "17.6.0"
     node-fetch "^2.6.1"
 
-"@budibase/types@1.1.33-alpha.1":
-  version "1.1.33-alpha.1"
-  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-1.1.33-alpha.1.tgz#8a1253208a618b439d85977c3879b0184b6487e8"
-  integrity sha512-BEIJqb9WjAck16rkgtGHlnxANhkK8OXbJLBxu+eB4x7F6tSmMI+T6zsBkGE0ehHmqa6YNzY7OldKLc967mAaLA==
+"@budibase/types@1.1.33-alpha.4":
+  version "1.1.33-alpha.4"
+  resolved "https://registry.yarnpkg.com/@budibase/types/-/types-1.1.33-alpha.4.tgz#a8de79c385280389be8b2cc214185caddf5fe4d3"
+  integrity sha512-od/gbLgbJnHsVlCvBQkuJf3t/Y9VLUNRYPl3Y4IbNOylpj3rSOKVGF3jANQgkI+pOBt5ni3Xlhc7aOI3qAning==
 
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
