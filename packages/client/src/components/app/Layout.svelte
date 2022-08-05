@@ -5,6 +5,7 @@
   import { FieldTypes } from "constants"
   import active from "svelte-spa-router/active"
   import { RoleUtils } from "@budibase/frontend-core"
+  import { enrichDataBindings } from "../../utils/enrichDataBinding.js"
 
   const sdk = getContext("sdk")
   const { routeStore, styleable, linkable, builderStore, currentRole } = sdk
@@ -82,13 +83,18 @@
   }
 
   const getValidLinks = (allLinks, role) => {
-    // Strip links missing required info
-    let validLinks = (allLinks || []).filter(link => link.text && link.url)
+    // Enrich link visible and strip links missing required info
+    let validLinks = (allLinks || [])
+      .map(link => enrichDataBindings(link, context))
+      .filter(link => link.text && link.url)
 
-    // Filter to only links allowed by the current role
+    // Filter to only links visible and allowed by the current role
     const priority = RoleUtils.getRolePriority(role)
     return validLinks.filter(link => {
-      return !link.roleId || RoleUtils.getRolePriority(link.roleId) <= priority
+      return (
+        link.visible?.toString().toLowerCase() !== "false" &&
+        (!link.roleId || RoleUtils.getRolePriority(link.roleId) <= priority)
+      )
     })
   }
 
@@ -137,9 +143,9 @@
 
 <div
   class="layout layout--{typeClass}"
-  use:styleable={$component.styles}
   class:desktop={!mobile}
   class:mobile={!!mobile}
+  use:styleable={$component.styles}
 >
   {#if typeClass !== "none"}
     <div

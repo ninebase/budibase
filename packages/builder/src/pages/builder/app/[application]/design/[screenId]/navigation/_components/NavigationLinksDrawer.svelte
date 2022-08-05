@@ -12,6 +12,10 @@
   import { generate } from "shortid"
   import { store } from "builderStore"
   import RoleSelect from "components/design/settings/controls/RoleSelect.svelte"
+  import DrawerBindableInput from "components/common/bindings/DrawerBindableInput.svelte"
+  import { getBindableProperties } from "builderStore/dataBinding"
+
+  $: bindings = getBindableProperties(null, null)
 
   export let links = []
 
@@ -47,7 +51,7 @@
 
 <DrawerContent>
   <div class="container">
-    <Layout noPadding gap="S">
+    <Layout gap="S" noPadding>
       {#if links?.length}
         <div
           class="links"
@@ -77,6 +81,12 @@
                 options={urlOptions}
               />
               <RoleSelect bind:value={link.roleId} placeholder="Minimum role" />
+              <DrawerBindableInput
+                {bindings}
+                placeholder="Visible"
+                value={link.visible}
+                on:change={e => (link.visible = e.detail)}
+              />
               <Icon
                 name="Close"
                 hoverable
@@ -88,7 +98,7 @@
         </div>
       {/if}
       <div>
-        <Button secondary icon="Add" on:click={addLink}>Add Link</Button>
+        <Button icon="Add" on:click={addLink} secondary>Add Link</Button>
       </div>
     </Layout>
   </div>
