@@ -1,7 +1,11 @@
 name: Budibase Release Selfhost
 
 on:
-  workflow_dispatch:
+ workflow_dispatch:
+
+env:
+  BRANCH: ${{ github.event.pull_request.head.ref }}
+  BASE_BRANCH: ${{ github.event.pull_request.base.ref}}
 
 jobs:
   release:
@@ -9,7 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
+        with: 
           node-version: 14.x
           fetch_depth: 0
 
@@ -23,30 +27,32 @@ jobs:
           release_tag=v$release_version
 
           # Pull apps and worker images
-          docker pull ninebase/budibase-apps:$release_tag
-          docker pull ninebase/budibase-worker:$release_tag
-          docker pull ninebase/budibase-proxy:$release_tag
+          docker pull budibase/apps:$release_tag
+          docker pull budibase/worker:$release_tag
+          docker pull budibase/proxy:$release_tag
 
           # Tag apps and worker images
-          docker tag ninebase/budibase-apps:$release_tag ninebase/budibase-apps:$SELFHOST_TAG
-          docker tag ninebase/budibase-worker:$release_tag ninebase/budibase-worker:$SELFHOST_TAG
-          docker tag ninebase/budibase-proxy:$release_tag ninebase/budibase-proxy:$SELFHOST_TAG
+          docker tag budibase/apps:$release_tag budibase/apps:$SELFHOST_TAG
+          docker tag budibase/worker:$release_tag budibase/worker:$SELFHOST_TAG
+          docker tag budibase/proxy:$release_tag budibase/proxy:$SELFHOST_TAG
           
           # Push images
-          docker push ninebase/budibase-apps:$SELFHOST_TAG
-          docker push ninebase/budibase-worker:$SELFHOST_TAG
-          docker push ninebase/budibase-proxy:$SELFHOST_TAG
+          docker push budibase/apps:$SELFHOST_TAG
+          docker push budibase/worker:$SELFHOST_TAG
+          docker push budibase/proxy:$SELFHOST_TAG
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_API_KEY }}
           SELFHOST_TAG: latest
 
-      - name: Build CLI executables
+      - name: Install Pro
+        run: yarn install:pro $BRANCH $BASE_BRANCH
+
+      - name: Bootstrap and build (CLI)
         run: |
-          pushd packages/cli
           yarn
+          yarn bootstrap
           yarn build
-          popd
 
       - name: Build OpenAPI spec
         run: |
@@ -54,8 +60,8 @@ jobs:
           yarn
           yarn specs
           popd
-
-      - name: Setup Helm
+      
+      - name: Setup Helm 
         uses: azure/setup-helm@v1
         id: helm-install
 
