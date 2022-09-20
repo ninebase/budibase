@@ -7,6 +7,7 @@
   import { RoleUtils } from "@budibase/frontend-core"
   import FreeLogo from "../FreeLogo.svelte"
   import licensing from "../../licensing"
+  import { enrichDataBindings } from "utils/enrichDataBinding.js"
 
   const sdk = getContext("sdk")
   const {
