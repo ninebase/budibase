@@ -5,10 +5,18 @@
   import { FieldTypes } from "constants"
   import active from "svelte-spa-router/active"
   import { RoleUtils } from "@budibase/frontend-core"
-  import { enrichDataBindings } from "../../utils/enrichDataBinding.js"
+  import FreeLogo from "../FreeLogo.svelte"
+  import licensing from "../../licensing"
 
   const sdk = getContext("sdk")
-  const { routeStore, styleable, linkable, builderStore, currentRole } = sdk
+  const {
+    routeStore,
+    styleable,
+    linkable,
+    builderStore,
+    currentRole,
+    environmentStore,
+  } = sdk
   const component = getContext("component")
   const context = getContext("context")
 
@@ -231,6 +239,11 @@
       </div>
     </div>
   {/if}
+
+  {#if !$builderStore.inBuilder && licensing.logoEnabled() && $environmentStore.cloud}
+    <FreeLogo />
+  {/if}
+
   <div class="main-wrapper">
     <div class="main size--{pageWidthClass}">
       <slot />
