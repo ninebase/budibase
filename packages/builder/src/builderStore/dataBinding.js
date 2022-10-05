@@ -243,18 +243,18 @@ export const getDatasourceForProvider = (asset, component) => {
     return null
   }
 
-  // There are different types of setting which can be a datasource, for
-  // example an actual datasource object, or a table ID string.
-  // Convert the datasource setting into a proper datasource object so that
-  // we can use it properly
-  if (datasourceSetting.type === "table") {
+  // For legacy compatibility, we need to be able to handle datasources that are
+  // just strings. These are not generated any more, so could be removed in
+  // future.
+  // TODO: remove at some point
+  const datasource = component[datasourceSetting?.key]
+  if (typeof datasource === "string") {
     return {
-      tableId: component[datasourceSetting?.key],
+      tableId: datasource,
       type: "table",
     }
-  } else {
-    return component[datasourceSetting?.key]
   }
+  return datasource
 }
 
 /**
@@ -396,19 +396,17 @@ export const getUserBindings = () => {
 
   bindings = keys.reduce((acc, key) => {
     const fieldSchema = schema[key]
-    if (fieldSchema.type !== "link") {
-      acc.push({
-        type: "context",
-        runtimeBinding: `${safeUser}.${makePropSafe(key)}`,
-        readableBinding: `Current User.${key}`,
-        // Field schema and provider are required to construct relationship
-        // datasource options, based on bindable properties
-        fieldSchema,
-        providerId: "user",
-        category: "Current User",
-        icon: "User",
-      })
-    }
+    acc.push({
+      type: "context",
+      runtimeBinding: `${safeUser}.${makePropSafe(key)}`,
+      readableBinding: `Current User.${key}`,
+      // Field schema and provider are required to construct relationship
+      // datasource options, based on bindable properties
+      fieldSchema,
+      providerId: "user",
+      category: "Current User",
+      icon: "User",
+    })
     return acc
   }, [])
 
