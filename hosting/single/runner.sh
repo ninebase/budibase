@@ -10,7 +10,7 @@ declare -a DOCKER_VARS=("APP_PORT" "APPS_URL" "ARCHITECTURE" "BUDIBASE_ENVIRONME
 [[ -z "${MINIO_URL}" ]] && export MINIO_URL=http://localhost:9000
 [[ -z "${NODE_ENV}" ]] && export NODE_ENV=production
 [[ -z "${POSTHOG_TOKEN}" ]] && export POSTHOG_TOKEN=phc_bIjZL7oh2GEUd2vqvTBH8WvrX0fWTFQMs6H5KQxiUxU
-[[ -z "${TENANT_FEATURE_FLAGS}" ]] && export TENANT_FEATURE_FLAGS="*:LICENSING,*:USER_GROUPS"
+[[ -z "${TENANT_FEATURE_FLAGS}" ]] && export TENANT_FEATURE_FLAGS="*:LICENSING,*:USER_GROUPS,*:ONBOARDING_TOUR"
 [[ -z "${ACCOUNT_PORTAL_URL}" ]] && export ACCOUNT_PORTAL_URL=https://account.budibase.app
 [[ -z "${REDIS_URL}" ]] && export REDIS_URL=localhost:6379
 [[ -z "${SELF_HOSTED}" ]] && export SELF_HOSTED=1
@@ -78,7 +78,7 @@ mkdir -p ${DATA_DIR}/search
 chown -R couchdb:couchdb ${DATA_DIR}/couch
 redis-server --requirepass $REDIS_PASSWORD > /dev/stdout 2>&1 &
 /opt/clouseau/bin/clouseau > /dev/stdout 2>&1 &
-/minio/minio server ${DATA_DIR}/minio > /dev/stdout 2>&1 &
+/minio/minio server --console-address ":9001" ${DATA_DIR}/minio > /dev/stdout 2>&1 &
 /docker-entrypoint.sh /opt/couchdb/bin/couchdb &
 /etc/init.d/nginx restart
 if [[ ! -z "${CUSTOM_DOMAIN}" ]]; then
